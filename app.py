@@ -4,18 +4,15 @@ import os
 
 app = Flask(__name__)
 
-# SerpAPI base URL and API key
 SERP_API_URL = "https://serpapi.com.json"
 SERP_API_KEY = os.getenv("SPORTS_API_KEY")
 
 @app.route('/sports', methods=['GET'])
 def get_nfl_schedule():
-    # Fetches the NFL schedule from SerpAPI and returns it as JSON
     if not SERP_API_KEY:
         return jsonify({"message": "API key is missing."}), 500
 
     try:
-        # Query SerpAPI
         params = {
             "engine": "google",
             "q": "nfl schedule",
@@ -25,12 +22,10 @@ def get_nfl_schedule():
         response.raise_for_status()
         data = response.json()
 
-        # Extract games from sports_results
         games = data.get("sports_results", {}).get("games", [])
         if not games:
             return jsonify({"message": "No NFL schedule available.", "games": []}), 200
 
-        # Format the schedule into JSON
         formatted_games = []
         for game in games:
             teams = game.get("teams", [])
