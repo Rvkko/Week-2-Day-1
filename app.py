@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-SERP_API_URL = "https://serpapi.com.json"
+SERP_API_URL = "https://serpapi.com/search.json"
 SERP_API_KEY = os.getenv("SPORTS_API_KEY")
 
 @app.route('/sports', methods=['GET'])
